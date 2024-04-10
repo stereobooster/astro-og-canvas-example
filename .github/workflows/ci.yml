@@ -7,7 +7,7 @@ on:
     types: [opened, synchronize]
  
 jobs:
-  build:
+  build-pnpm-node-18:
     runs-on: ubuntu-latest
 
     steps:
@@ -24,6 +24,29 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 18.17.1
+          cache: 'pnpm'
+ 
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build
+        run: pnpm build
+
+  build-pnpm-node-20:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - uses: pnpm/action-setup@v3
+ 
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
           cache: 'pnpm'
  
       - name: Install dependencies
